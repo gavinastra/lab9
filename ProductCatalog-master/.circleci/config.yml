@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/ProductCatalog-master
+    working_directory: ~/Lab9
     docker:
       - image: circleci/android:api-28.0.1
     environment:
