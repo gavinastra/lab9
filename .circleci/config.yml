@@ -9,6 +9,7 @@ jobs:
     steps:
       - checkout:
           path: ~/subfolder
+      - run: ls
       - restore_cache:
           key: jars-{{ checksum "subfolder/build.gradle" }}-{{ checksum  "subfolder/app/build.gradle" }}
       - run:
