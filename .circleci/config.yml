@@ -7,13 +7,12 @@ jobs:
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
-      - checkout:
-          path: ~/subfolder
+      - checkout
       - restore_cache:
           key: jars-{{ checksum "subfolder/build.gradle" }}-{{ checksum  "subfolder/app/build.gradle" }}
       - run:
          name: Chmod permissions  
-         command: sudo chmod +x ./gradlew
+         command: sudo chmod +x subfolder/gradlew
       - run:
           name: Download Dependencies
           command: subfolder/gradlew androidDependencies
