@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/lab9
+    working_directory: ~/lab9/subfolder
     docker:
       - image: circleci/android:api-28-alpha
     environment:
@@ -9,27 +9,23 @@ jobs:
     steps:
       - checkout:
           path: ~/subfolder
-      - run: 
-          name: testing directory content
-          command: ls
       - restore_cache:
-          key: jars-{{ checksum "subfolder/build.gradle" }}-{{ checksum  "subfolder/app/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
          name: Chmod permissions  
-         command: sudo chmod +x subfolder/gradlew
+         command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
-          command: subfolder/gradlew androidDependencies
+          command: ./gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/subfolder/.gradle
-          key: jars-{{ checksum "subfolder/build.gradle" }}-{{ checksum  "subfolder/app/build.gradle" }}
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run UnitTest
-          command: subfolder//gradlew test
+          command: ./gradlew test
       - store_artifacts:
-          path: subfolder/app/build/outputs/apk/debug/
+          path: app/build/outputs/apk/debug/
           destination: apks/
       - store_test_results:
-          path: subfolder/app/build/test-results
- 
+          path: app/build/test-results
